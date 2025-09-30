@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usage Component</title>
+  
+  <!-- Bootstrap CSS (NO TRAILING SPACES!) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  
+  <!-- Font Awesome (NO TRAILING SPACES!) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <!-- jQuery (NO TRAILING SPACES!) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
+  <!-- Your custom script -->
+  <script src="./component/index.js"></script>
+</head>
+<style>
+    .group-header {
+        padding: 8px 12px;
+        background: #f8f9fa;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+    .field-number {
+        color: #0d6efd;
+        font-weight: bold;
+        min-width: 40px;
+        display: inline-block;
+    }
+    .remove-group {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+    }
+    </style>
+<body>
+  <div class="container">
+    <div class="row m-5">
+      <div class="col-12">
+        <h1>Usage Component</h1>
+      </div>
+    </div>
+    
+    <!-- Group Cloning Container -->
+    <div id="groups-container" class="mt-4">
+      <!-- Original Group (will be cloned) -->
+       <h2>Clone Component by one by one</h2>
+      <ul class="list-unstyled">
+        <li class="mb-3">
+          <label class="form-label">Text Box</label>
+          <input type="text" class="form-control ac_text" data-icon-class="bi bi-person" placeholder="Your name" />
+        </li>
+        <li class="mb-3">
+          <label class="form-label">Number</label>
+          <input type="number" class="form-control ac_number" placeholder="0" />
+        </li>
+        <li class="mb-3">
+          <label class="form-label">Textarea</label>
+          <textarea class="form-control ac_textarea" rows="3" placeholder="Notes..."></textarea>
+        </li>
+        <li class="mb-3">
+          <label class="form-label">Select</label>
+          <select class="form-select ac_select">
+            <option value="">Choose...</option>
+            <option>Cover</option>
+            <option>Basic</option>
+          </select>
+        </li>
+        <li class="mb-3">
+          <label class="form-label">Time</label>
+          <input class="form-control ac_time" data-icon-class="bi bi-clock" />
+        </li>
+        <li class="mb-3">
+          <label class="form-label">File</label>
+          <input class="form-control ac_file" data-icon-class="bi bi-paperclip" />
+        </li>
+      </ul>
+      <h2>Clone Component by group</h2>
+      <ul class="list-unstyled clone-group">
+        <li class="mb-3">
+          <label class="form-label">Text Box</label>
+          <input type="text" class="form-control ac_text" data-icon-class="bi bi-person" placeholder="Your name" />
+        </li>
+        <li class="mb-3">
+          <label class="form-label">Number</label>
+          <input type="number" class="form-control ac_number" placeholder="0" />
+        </li>
+        <li class="mb-3">
+          <label class="form-label">Textarea</label>
+          <textarea class="form-control ac_textarea" rows="3" placeholder="Notes..."></textarea>
+        </li>
+        <li class="mb-3">
+          <label class="form-label">Select</label>
+          <select class="form-select ac_select">
+            <option value="">Choose...</option>
+            <option>Cover</option>
+            <option>Basic</option>
+          </select>
+        </li>
+        <li class="mb-3">
+          <label class="form-label">Time</label>
+          <input class="form-control ac_time" data-icon-class="bi bi-clock" />
+        </li>
+        <li class="mb-3">
+          <label class="form-label">File</label>
+          <input class="form-control ac_file" data-icon-class="bi bi-paperclip" />
+        </li>
+      </ul>
+
+
+      <!-- Add Group Button -->
+      <button type="button" class="btn btn-success mt-3 ac_group_add">
+        <i class="fa fa-plus"></i> Add Group
+      </button>
+    </div>
+
+    <button type="submit" form="dateForm" class="btn btn-primary mt-3">Submit</button>
+  </div>
+
+  <script>
+    $(function() {
+      // Initialize components for the ORIGINAL group
+      $('.ac_text').ACInputText();
+      $('.ac_number').ACInputNumber();
+      $('.ac_textarea').ACInputTextarea();
+      $('.ac_select').ACInputSelect();
+      $(' .ac_time').ACInputTime();
+      $('.ac_file').ACInputFile();
+
+      // Enable GROUP cloning (adds "Add Group" button to .one)
+      $('.clone-group').ACCloneComponentByGroup();
+
+      // Handle form submission
+      $('body').on('submit', '#dateForm', function(e) {
+        e.preventDefault();
+        alert('Form submitted!');
+      });
+    });
+  </script>
+</body>
+</html>

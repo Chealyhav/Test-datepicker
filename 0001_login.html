@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACLEDA Bank - Core Banking System</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* ACLEDA Bank Brand Colors */
+            --acleda-blue: #1B3251;
+            --acleda-gold: #CEA939;
+            --acleda-white: #FFFFFF;
+            --light-blue: rgba(27, 50, 81, 0.05);
+            --light-gold: rgba(206, 169, 57, 0.1);
+            --shadow-color: rgba(27, 50, 81, 0.15);
+            --text-muted: #64748b;
+            --border-color: #a5a6a7;
+            --success-color: #16a34a;
+            --error-color: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--acleda-white) 0%, #f8fafc 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--acleda-blue);
+            overflow-x: hidden;
+            background-image: url('https://www.acledabank.com.la/la/assets/layout/bg-login.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Enhanced background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, var(--light-blue) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--light-gold) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .login-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Branding Section */
+        .branding-section {
+            flex: 1;
+            min-width: 320px;
+            position: relative;
+            padding: 2rem;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .branding-section::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: radial-gradient(circle at 30% 70%, var(--light-blue) 0%, transparent 50%);
+            border-radius: 24px;
+            z-index: -1;
+        }
+
+        .brand-title {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .brand-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .brand-subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--acleda-blue) 0%, var(--acleda-gold) 100%);
+            border-radius: 2px;
+            animation: expandLine 1s ease-out 0.5s both;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .feature-bullet {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, var(--acleda-blue) 0%, var(--acleda-gold) 100%);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            flex-shrink: 0;
+        }
+
+        /* Login Card Section */
+        .login-section {
+            flex: 1;
+            max-width: 450px;
+            width: 100%;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .login-card {
+            background: var(--acleda-white);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 
+                0 1px 3px rgba(27, 50, 81, 0.05),
+                0 10px 25px rgba(27, 50, 81, 0.08),
+                0 20px 40px rgba(27, 50, 81, 0.04);
+            border: 2px solid rgba(27, 50, 81, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, var(--acleda-blue) 0%, var(--acleda-gold) 100%);
+        }
+
+
+        /* Logo Section */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+            border-radius: 16px;
+           
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+            max-height: 80px;
+        }
+
+        /* Security Indicators */
+        .security-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .security-item i {
+            color: var(--acleda-gold);
+            font-size: 0.875rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--acleda-blue);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .required-asterisk {
+            color: var(--acleda-gold);
+            font-size: 0.75rem;
+        }
+
+        .form-control {
+            height: 45px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: var(--acleda-white);
+            transition: all 0.2s ease;
+            color: var(--acleda-blue);
+        }
+
+        .form-control:focus {
+            border-color: var(--acleda-blue);
+            box-shadow: 0 0 0 3px rgba(27, 50, 81, 0.1);
+            transform: translateY(-1px);
+            outline: none;
+        }
+
+ 
+
+
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            height: 45px;
+            background: linear-gradient(135deg, var(--acleda-blue) 0%, #2a4a6b 100%);
+            border: none;
+            border-radius: 10px;
+            color: var(--acleda-white);
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0f1f2e 0%, var(--acleda-blue) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27, 50, 81, 0.3);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(206, 169, 57, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--acleda-white);
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Footer */
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--acleda-gold);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--acleda-blue);
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes expandLine {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                width: 80px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .login-wrapper {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .branding-section {
+                min-width: auto;
+            }
+
+            .branding-section::before {
+                display: none;
+            }
+
+            .brand-title {
+                font-size: 2.5rem;
+            }
+
+            .login-card {
+                padding: 2rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-gold {
+            color: var(--acleda-gold);
+        }
+
+        .text-blue {
+            color: var(--acleda-blue);
+        }
+
+        .bg-gold {
+            background-color: var(--acleda-gold);
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+        .d-flex {
+            display: flex !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="login-wrapper">
+            <!-- Branding Section -->
+            <div class="branding-section">
+                <h1 class="brand-title">
+                    <span class="text-blue">Core Banking</span> 
+                    <span class="text-gold">System</span>
+                </h1>
+                <p class="brand-subtitle">
+                    Secure, scalable, and modern banking infrastructure for your institution.
+                </p>
+
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-bullet"></div>
+                        <span>Enterprise-grade security</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-bullet"></div>
+                        <span>Real-time transaction processing</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-bullet"></div>
+                        <span>24/7 system monitoring</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-bullet"></div>
+                        <span>Regulatory compliance</span>
+                    </li>
+                </ul>
+
+                <div class="footer-links">
+                    <div class="d-flex align-items-center justify-content-start mb-2">
+                        <div class="bg-gold rounded-circle me-2" style="width: 8px; height: 8px;"></div>
+                        <span class="fw-medium">Trusted by financial institutions</span>
+                    </div>
+                    <div>
+                        © 2025 CoreBank. All rights reserved. |
+                        <a href="#" class="text-gold">Privacy Policy</a> |
+                        <a href="#" class="text-gold">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Section -->
+            <div class="login-section">
+                <div class="login-card">
+                    <!-- Logo -->
+                    <div class="logo-container">
+                        <img src="https://www.acledabank.com.la/la/assets/layout/logo2.png" alt="ACLEDA Bank" />
+                    </div>
+
+                    <!-- Security Indicators -->
+                    <div class="security-indicators">
+                        <div class="security-item">
+                            <i class="bi bi-shield-check"></i>
+                            <span>Secure Login</span>
+                        </div>
+                        <div style="width: 4px; height: 4px; background: var(--text-muted); border-radius: 50%;"></div>
+                        <div class="security-item">
+                            <i class="bi bi-lock"></i>
+                            <span>256-bit SSL</span>
+                        </div>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" novalidate>
+                        <div class="form-group">
+                            <label for="username" class="form-label">
+                                Username
+                                <span class="required-asterisk">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="username" 
+                                placeholder="ENTER YOUR USERNAME"
+                                required
+                            />
+                            <div id="usernameError" class="error-message d-none">
+                                <i class="bi bi-exclamation-circle"></i>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                Password
+                                <span class="required-asterisk">*</span>
+                            </label>
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="password" 
+                                placeholder="Enter your password"
+                                required
+                            />
+                            <div id="passwordError" class="error-message d-none">
+                                <i class="bi bi-exclamation-circle"></i>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="login-btn" id="loginButton">
+                            <i class="bi bi-lock"></i>
+                            <span id="buttonText">Secure Login</span>
+                            <div id="loadingSpinner" class="spinner d-none"></div>
+                        </button>
+                    </form>
+
+                    <div class="login-footer">
+                        <p>Protected by enterprise-grade security</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
